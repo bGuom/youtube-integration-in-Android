@@ -53,16 +53,18 @@ public class ChannelActivity extends AppCompatActivity {
                         JSONObject jsonsnippet= jsonObject1.getJSONObject("snippet");
                         JSONObject jsonObjectdefault = jsonsnippet.getJSONObject("thumbnails").getJSONObject("medium");
                         VideoDetails videoDetails=new VideoDetails();
+                        
+                        if(jsonVideoId.has("videoId")) {
+                            String videoid = jsonVideoId.getString("videoId");
 
-                        String videoid=jsonVideoId.getString("videoId");
+                            Log.e(TAG, " New Video Id " + videoid);
+                            videoDetails.setURL(jsonObjectdefault.getString("url"));
+                            videoDetails.setVideoName(jsonsnippet.getString("title"));
+                            videoDetails.setVideoDesc(jsonsnippet.getString("description"));
+                            videoDetails.setVideoId(videoid);
 
-                        Log.e(TAG," New Video Id" +videoid);
-                        videoDetails.setURL(jsonObjectdefault.getString("url"));
-                        videoDetails.setVideoName(jsonsnippet.getString("title"));
-                        videoDetails.setVideoDesc(jsonsnippet.getString("description"));
-                           videoDetails.setVideoId(videoid);
-
-                        videoDetailsArrayList.add(videoDetails);
+                            videoDetailsArrayList.add(videoDetails);
+                        }
                     }
                     lvVideo.setAdapter(customListAdapter);
                     customListAdapter.notifyDataSetChanged();
